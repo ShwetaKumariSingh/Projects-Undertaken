@@ -1,5 +1,3 @@
-
-
 CREATE DATABASE AbleJobs;
 
 create table Sales1(salesman_id  int not null unique, name varchar (20) not null,
@@ -166,4 +164,78 @@ FROM
 JOIN
    sales1 ON sales2.city <> sales1.city AND sales1.commission > 0.12;
    
-   
+
+
+-------------------------------------------------------------------------------SQL Query 2
+
+create database Online_bookstore;
+create table Customer_table(cust_id int not null, cust_name varchar(50) not null, City varchar(30) not null);
+insert into customer_table(cust_id, cust_name, City)
+values (1, 'John Smith', 'New York'),
+(2,'Jane Doe','Los Angeles'),
+(3, 'Bob Johnson','Chicago');
+select * from customer_table;
+  
+create table Order_table(OrderID int not null, CustomerID int not null, Product varchar(20), Quantity int not null, Price int not null);  
+insert into order_table(orderID, CustomerID, Product, Quantity, Price)
+values (1, 1, 'Laptop',2,340),
+(2,1,'Printer',	1,240),
+(3,2,'Smartphone',3,70),
+(4,3,'Tablet',2,80);
+
+select * from order_table;
+
+select *
+from customer_table
+join order_table on customer_table.cust_id = order_table.CustomerID
+where order_table.Price > 100;
+
+select Product
+from order_table
+join customer_table on customer_table.cust_id = order_table.CustomerID
+where customer_table.City = (select city where cust_name = 'John Smith');
+
+
+select OrderID, Product, sum(Quantity*Price) as total_order_amnt
+from order_table
+join customer_table on customer_table.cust_id = order_table.CustomerID
+where Quantity > 2
+group by OrderID, Product;
+
+
+
+
+--------------------------------------------------------------SQL Query 3
+
+
+
+create database text1;
+
+CREATE TABLE teams (
+    team_id SERIAL PRIMARY KEY,
+    team_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE matches (
+    match_id SERIAL PRIMARY KEY,
+    team1_id INT NOT NULL,
+    team2_id INT NOT NULL,
+    match_date DATE
+);
+
+
+-- Insert sample data into the teams table
+INSERT INTO teams (team_name) VALUES
+('Team A'),
+('Team B'),
+('Team C'),
+('Team D');
+
+-- Insert matches where each team plays with every other team
+INSERT INTO matches (team1_id, team2_id, match_date)
+SELECT teams.team_id, matches.match_id, CURRENT_DATE
+FROM teams
+JOIN  matches ON teams.team_id < matches.match_id;
+
+
+
