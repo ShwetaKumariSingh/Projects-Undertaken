@@ -1,3 +1,5 @@
+
+
 CREATE DATABASE AbleJobs;
 
 create table Sales1(salesman_id  int not null unique, name varchar (20) not null,
